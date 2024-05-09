@@ -31,7 +31,9 @@ target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 # Цвет фона
 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-
+# Очки
+score = 0
+font = pygame.font.Font(None, 36)
 
 # Создание игрового цикла
 running = True
@@ -44,20 +46,24 @@ while running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             # Координаты мыши
             mouse_x, mouse_y = pygame.mouse.get_pos()
+            # Проверка попадания мыши в цель
             if mouse_x >= target_x and mouse_x <= target_x + target_width and mouse_y >= target_y and mouse_y <= target_y + target_height:
+                # Перемещение цели
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
                 color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
+                # Увеличение счета при попадании цели
+                score += 1
 
 # Отрисовка цели
     screen.blit(target, (target_x, target_y))
 
+    # Отображение очков
+    score_text = font.render(f"Score: {score}", True, (0, 0, 0))
+    screen.blit(score_text, (10, 10))
 
-# Обновление экрана
+    # Обновление экрана
     pygame.display.update()
-
-
 
 # Завершение игры (как только завершится цикл)
 pygame.quit()

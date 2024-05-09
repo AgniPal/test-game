@@ -20,7 +20,7 @@ pygame.display.set_icon(icon)
 # Создание "цели" в игре тир
 target = pygame.image.load("img/cake.png")
 
-# Задаём параметры цели
+# Задаём параметры цели (используемая картинка должна быть с такими же параметрами длины и ширины)
 target_width = 80
 target_height = 80
 
@@ -36,7 +36,28 @@ color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 # Создание игрового цикла
 running = True
 while running:
-    pass
+    screen.fill(color)
+    #Функция для перебора событий
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            # Координаты мыши
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+            if mouse_x >= target_x and mouse_x <= target_x + target_width and mouse_y >= target_y and mouse_y <= target_y + target_height:
+                target_x = random.randint(0, SCREEN_WIDTH - target_width)
+                target_y = random.randint(0, SCREEN_HEIGHT - target_height)
+                color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+
+# Отрисовка цели
+    screen.blit(target, (target_x, target_y))
+
+
+# Обновление экрана
+    pygame.display.update()
+
+
 
 # Завершение игры (как только завершится цикл)
 pygame.quit()
